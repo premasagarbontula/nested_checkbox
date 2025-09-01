@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nested Checkbox with Indeterminate State</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .category {
+        margin-top: 10px;
+      }
+      .items {
+        margin-left: 20px;
+      }
+      label {
+        display: block;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Nested Checkbox</h2>
+
+    <label>
+      <input type="checkbox" id="selectAll" />
+      Select All
+    </label>
+
+    <div class="category">
+      <label>
+        <input
+          type="checkbox"
+          class="category-checkbox"
+          data-category="fruits"
+        />
+        Fruits
+      </label>
+      <div class="items">
+        <label
+          ><input type="checkbox" class="item" data-category="fruits" />
+          Apple</label
+        >
+        <label
+          ><input type="checkbox" class="item" data-category="fruits" />
+          Banana</label
+        >
+        <label
+          ><input type="checkbox" class="item" data-category="fruits" />
+          Orange</label
+        >
+      </div>
+    </div>
+
+    <div class="category">
+      <label>
+        <input
+          type="checkbox"
+          class="category-checkbox"
+          data-category="vegetables"
+        />
+        Vegetables
+      </label>
+      <div class="items">
+        <label
+          ><input type="checkbox" class="item" data-category="vegetables" />
+          Carrot</label
+        >
+        <label
+          ><input type="checkbox" class="item" data-category="vegetables" />
+          Broccoli</label
+        >
+        <label
+          ><input type="checkbox" class="item" data-category="vegetables" />
+          Potato</label
+        >
+      </div>
+    </div>
+
+    <script>
+      const selectAll = document.getElementById("selectAll");
+      const categoryCheckboxes =
+        document.querySelectorAll(".category-checkbox");
+      const itemCheckboxes = document.querySelectorAll(".item");
+
+      selectAll.addEventListener("change", (e) => {
+        const checked = e.target.checked;
+        [...categoryCheckboxes, ...itemCheckboxes].forEach((cb) => {
+          cb.checked = checked;
+          cb.indeterminate = false;
+        });
+      });
+
+      categoryCheckboxes.forEach((categoryBox) => {
+        categoryBox.addEventListener("change", (e) => {
+          const category = e.target.dataset.category;
+          const items = document.querySelectorAll(
+            `.item[data-category="${category}"]`
+          );
+          items.forEach((item) => {
+            item.checked = categoryBox.checked;
+          });
+          updateSelectAll();
+        });
+      });
+
+      itemCheckboxes.forEach((item) => {
+        item.addEventListener("change", (e) => {
+          const category = e.target.dataset.category;
+          updateCategory(category);
+          updateSelectAll();
+        });
+      });
+
+      function updateCategory(category) {
+        const categoryBox = document.querySelector(
+          `.category-checkbox[data-category="${category}"]`
+        );
+        const items = document.querySelectorAll(
+          `.item[data-category="${category}"]`
+        );
+        const checkedItems = [...items].filter((i) => i.checked).length;
+
+        if (checkedItems === items.length) {
+          categoryBox.checked = true;
+          categoryBox.indeterminate = false;
+        } else if (checkedItems === 0) {
+          categoryBox.checked = false;
+          categoryBox.indeterminate = false;
+        } else {
+          categoryBox.checked = false;
+          categoryBox.indeterminate = true;
+        }
+      }
+
+      function updateSelectAll() {
+        const categories = [...categoryCheckboxes];
+        const items = [...itemCheckboxes];
+
+        const allChecked =
+          categories.every((cb) => cb.checked) && items.every((i) => i.checked);
+        const noneChecked =
+          categories.every((cb) => !cb.checked && !cb.indeterminate) &&
+          items.every((i) => !i.checked);
+
+        if (allChecked) {
+          selectAll.checked = true;
+          selectAll.indeterminate = false;
+        } else if (noneChecked) {
+          selectAll.checked = false;
+          selectAll.indeterminate = false;
+        } else {
+          selectAll.checked = false;
+          selectAll.indeterminate = true;
+        }
+      }
+    </script>
+  </body>
+</html>
