@@ -1,5 +1,10 @@
 # Nested Checkbox with Indeterminate State
 
+## Live Demo
+
+You can view the deployed project here:  
+👉 [Nested Checkbox Demo](https://sparkling-semifreddo-833bec.netlify.app/)
+
 This project demonstrates a **nested checkbox system** with support for the `indeterminate` state.  
 It includes a **"Select All"** checkbox, category checkboxes (e.g., Fruits, Vegetables), and individual item checkboxes.
 
