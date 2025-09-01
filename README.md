@@ -60,7 +60,7 @@ nested-checkbox/
 
 ---
 
-## Screenshot (Optional)
+## Screenshots
 
 ![Select all check boxes](./assets/demo_2.png)
 
