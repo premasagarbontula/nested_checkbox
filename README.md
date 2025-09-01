@@ -62,11 +62,11 @@ nested-checkbox/
 
 ## Screenshot (Optional)
 
-![Select all check boxes](assets\demo_2.png)
+![Select all check boxes](./assets/demo_2.png)
 
-![Vegetables indeterminate state](assets\demo_1.png)
+![Vegetables indeterminate state](./assets/demo_1.png)
 
-![Select All indeterminate state](assets\demo_3.png)
+![Select All indeterminate state](./assets/demo_3.png)
 
 ---
 
